@@ -1,0 +1,144 @@
+/* Custom Styles */
+
+.player-active {
+  border: 3px solid #3b82f6;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.player-inactive {
+  border: 2px solid #e5e7eb;
+  opacity: 0.7;
+}
+
+.player-waiting {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Reaction button animation */
+#reaction-btn {
+  animation: buttonAppear 0.2s ease-out;
+}
+
+@keyframes buttonAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Connection status styles */
+#connection-status.connected {
+  background-color: #10b981;
+  color: white;
+}
+
+#connection-status.disconnected {
+  background-color: #ef4444;
+  color: white;
+}
+
+#connection-status.connecting {
+  background-color: #f59e0b;
+  color: white;
+}
+
+/* Too early warning */
+.too-early-warning {
+  animation: shake 0.5s ease-in-out;
+  background-color: #fef2f2 !important;
+  border-color: #ef4444 !important;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Round result animation */
+.round-winner {
+  animation: celebrate 0.5s ease-out;
+}
+
+@keyframes celebrate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Waiting animation */
+.waiting-text::after {
+  content: '';
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: ''; }
+  40% { content: '.'; }
+  60% { content: '..'; }
+  80%, 100% { content: '...'; }
+}
+
+/* Game message styles */
+.message-waiting {
+  color: #6b7280;
+}
+
+.message-ready {
+  color: #059669;
+  font-weight: 600;
+}
+
+.message-result {
+  color: #2563eb;
+}
+
+/* Player card in game */
+.player-card-active {
+  border-left: 4px solid #3b82f6;
+  background: linear-gradient(90deg, #eff6ff 0%, #ffffff 100%);
+}
+
+/* Disabled button state */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Reaction button disabled (wrong player) */
+#reaction-btn.locked {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+#reaction-btn.locked:hover {
+  background-color: #9ca3af;
+}
+
+/* Winner highlight */
+.winner-highlight {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+}
+
+/* Smooth transitions */
+.screen-transition {
+  transition: opacity 0.3s ease-in-out;
+}
