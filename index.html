@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reaction Time Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8 max-w-2xl">
+    <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Reaction Time Game</h1>
+    
+    <!-- Join Screen -->
+    <div id="join-screen" class="bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Join Game</h2>
+      <div class="space-y-4">
+        <input 
+          type="text" 
+          id="player-name" 
+          placeholder="Enter your name" 
+          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg"
+          maxlength="20"
+        >
+        <button 
+          id="join-btn" 
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 text-lg"
+        >
+          Join Game
+        </button>
+      </div>
+      <p id="join-status" class="mt-4 text-center text-gray-600"></p>
+    </div>
+
+    <!-- Lobby Screen -->
+    <div id="lobby-screen" class="hidden bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Waiting for Players</h2>
+      <div id="player-list" class="space-y-3 mb-6"></div>
+      <p id="lobby-status" class="text-center text-gray-600 mb-6"></p>
+      <button 
+        id="start-btn" 
+        class="hidden w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 text-lg"
+      >
+        Start Game
+      </button>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="hidden">
+      <!-- Round Info -->
+      <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div class="flex justify-between items-center">
+          <span class="text-lg font-medium text-gray-600">Round: <span id="round-number" class="font-bold text-gray-800">1</span>/<span id="total-rounds">5</span></span>
+          <span id="active-player-display" class="text-lg font-semibold text-blue-600"></span>
+        </div>
+      </div>
+
+      <!-- Game Area -->
+      <div id="game-area" class="bg-white rounded-xl shadow-lg p-8 min-h-[300px] flex flex-col items-center justify-center">
+        <p id="game-message" class="text-xl text-gray-700 text-center mb-6"></p>
+        <div id="reaction-button-container" class="hidden">
+          <button 
+            id="reaction-btn" 
+            class="w-40 h-40 bg-red-500 hover:bg-red-600 rounded-full text-white font-bold text-2xl shadow-lg transform transition-all duration-100 active:scale-95"
+          >
+            CLICK!
+          </button>
+        </div>
+        <p id="reaction-time-display" class="hidden text-3xl font-bold text-green-600 mt-4"></p>
+      </div>
+
+      <!-- Player Status -->
+      <div class="grid grid-cols-2 gap-4 mt-6">
+        <div id="player1-card" class="bg-white rounded-xl shadow-lg p-4">
+          <h3 id="player1-name" class="font-semibold text-gray-800 text-lg mb-2"></h3>
+          <p class="text-sm text-gray-500">Last: <span id="player1-last-time" class="font-medium">--</span> ms</p>
+          <p class="text-sm text-gray-500">Avg: <span id="player1-avg-time" class="font-medium">--</span> ms</p>
+        </div>
+        <div id="player2-card" class="bg-white rounded-xl shadow-lg p-4">
+          <h3 id="player2-name" class="font-semibold text-gray-800 text-lg mb-2"></h3>
+          <p class="text-sm text-gray-500">Last: <span id="player2-last-time" class="font-medium">--</span> ms</p>
+          <p class="text-sm text-gray-500">Avg: <span id="player2-avg-time" class="font-medium">--</span> ms</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="hidden bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Game Over!</h2>
+      <div id="winner-display" class="text-center mb-8">
+        <p class="text-xl text-gray-600 mb-2">Winner</p>
+        <p id="winner-name" class="text-4xl font-bold text-green-600"></p>
+        <p id="winner-time" class="text-lg text-gray-500 mt-2"></p>
+      </div>
+      <div class="grid grid-cols-2 gap-6 mb-8">
+        <div class="text-center p-4 bg-gray-50 rounded-lg">
+          <p id="final-player1-name" class="font-semibold text-gray-800"></p>
+          <p class="text-2xl font-bold text-blue-600"><span id="final-player1-avg"></span> ms</p>
+          <p class="text-sm text-gray-500">average</p>
+        </div>
+        <div class="text-center p-4 bg-gray-50 rounded-lg">
+          <p id="final-player2-name" class="font-semibold text-gray-800"></p>
+          <p class="text-2xl font-bold text-blue-600"><span id="final-player2-avg"></span> ms</p>
+          <p class="text-sm text-gray-500">average</p>
+        </div>
+      </div>
+      <button 
+        id="play-again-btn" 
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 text-lg"
+      >
+        Play Again
+      </button>
+    </div>
+
+    <!-- Connection Status -->
+    <div id="connection-status" class="fixed bottom-4 right-4 px-4 py-2 rounded-full text-sm font-medium">
+      <span id="connection-text">Connecting...</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
